@@ -1,19 +1,20 @@
 ### ✅ `README.md`
 
-# Flexible Screen Recorder (Chrome Extension)
+# Student Screen Recorder Extension
 
-A Chrome extension to record your **entire screen**, **application window**, or **browser tab** with customizable **frame rate (FPS)**. Includes an admin settings page for better control.
+A Chrome extension that allows students to record their screens and automatically upload recordings to their GitHub repositories. Perfect for computer labs and educational environments.
 
 ---
 
 ## 🚀 Features
 
-- Record Screen / Window / Tab
-- Set custom Frame Rate (5, 10, 15, 30 FPS)
-- Admin Settings page to control defaults
-- Supports audio recording
-- Automatically prompts to download `.webm` video
-- Simple & user-friendly interface
+- 🎥 **Screen Recording**: Record entire screen, specific windows, or browser tabs
+- 🔐 **GitHub Authentication**: Login with GitHub Personal Access Token
+- 📤 **Auto Upload**: Automatically upload recordings to GitHub repository
+- ⚙️ **Admin Settings**: Configure Firebase settings for different institutions
+- 📝 **Subtitle Generation**: Generate SRT files with window titles
+- 🎛️ **Customizable FPS**: Set frame rate (5, 10, 15, 30 FPS)
+- 🔊 **Audio Support**: Record with audio
 
 ---
 
@@ -35,35 +36,44 @@ A Chrome extension to record your **entire screen**, **application window**, or 
 
 ---
 
-## 🛠️ Installation (Build & Run)
+## 🛠️ Installation & Setup
 
-1. **Clone or Download** the repository:
-```bash
-   git clone https://github.com/Pragament/browser_extension_screen_recorder.git
-```
+### For Students
 
-2. **Open Chrome** and go to:
+1. **Install the Extension**:
+   - Open Chrome and go to `chrome://extensions/`
+   - Enable Developer Mode (top right)
+   - Click "Load unpacked" and select the project folder
 
-   ```
-   chrome://extensions/
-   ```
+2. **Get GitHub Token**:
+   - Go to [GitHub Settings > Personal Access Tokens](https://github.com/settings/tokens)
+   - Click "Generate new token (classic)"
+   - Select "repo" scope
+   - Copy the generated token
 
-3. **Enable Developer Mode** (top right)
+3. **Create Repository**:
+   - Create a repository named `my_screen_recordings` in your GitHub account
 
-4. Click on **“Load unpacked”** and select the project folder.
+4. **Login**:
+   - Click "Login with GitHub Token" in the extension
+   - Paste your GitHub token
 
-5. The extension should now appear in your Chrome toolbar.
+### For Administrators
+
+1. **Configure Firebase**: Go to extension settings and update Firebase configuration
+2. **Update GitHub OAuth**: Update the GitHub Client ID and Secret in the code if needed
 
 ---
 
 ## ⚙️ Usage
 
-1. Click the **extension icon** from the Chrome toolbar.
-2. Choose the **recording source** (screen, window, tab).
-3. Click **“Open Recorder”**.
-4. Grant screen sharing permissions.
-5. Click **“Stop Recording”** once done.
-6. The video will be automatically downloaded in `.webm` format.
+1. Click the **extension icon** from the Chrome toolbar
+2. Click **"Login with GitHub Token"** and enter your token
+3. Click **"Start Recording"** to begin screen recording
+4. Select what you want to record (screen, window, or tab)
+5. Click **"Stop Recording"** when finished
+6. Choose to upload the recording to your GitHub repository
+7. The recording will be saved locally and uploaded to GitHub
 
 ---
 
