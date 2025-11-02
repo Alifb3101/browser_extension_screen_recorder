@@ -31,6 +31,7 @@
     "default_popup": "popup.html",
     "default_title": "Screen Recorder"
   },
+  "options_page": "settings.html",
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -41,7 +42,7 @@
     "128": "download.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; frame-src 'self'"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; frame-src 'self'; connect-src 'self' https://api.github.com https://github.com https://*.github.com https://*.githubusercontent.com https://*.firebaseapp.com"
   }
 }
 

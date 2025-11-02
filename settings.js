@@ -23,10 +23,40 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // Load stored settings
-  chrome.storage.sync.get(["fps", "source", "firebaseConfig"], (result) => {
+  const clientListDiv = document.getElementById('github-client-list');
+  const newClientInput = document.getElementById('newGithubClientId');
+  // clientIds is shared across handlers
+  let clientIds = [];
+
+  function renderClientList() {
+    if (!clientListDiv) return;
+    clientListDiv.innerHTML = '';
+    clientIds.forEach((id, idx) => {
+      const row = document.createElement('div');
+      row.style.display = 'flex';
+      row.style.marginTop = '6px';
+      const span = document.createElement('span');
+      span.textContent = id;
+      span.style.flex = '1';
+      span.style.wordBreak = 'break-all';
+      const btn = document.createElement('button');
+      btn.textContent = 'Remove';
+      btn.style.marginLeft = '8px';
+      btn.addEventListener('click', () => {
+        clientIds.splice(idx, 1);
+        renderClientList();
+      });
+      row.appendChild(span);
+      row.appendChild(btn);
+      clientListDiv.appendChild(row);
+    });
+  }
+
+  // Load stored settings
+  chrome.storage.sync.get(["fps", "source", "firebaseConfig", "githubClientIds"], (result) => {
     fpsSelect.value = result.fps || "30";
     sourceSelect.value = result.source || "screen";
-    
+
     // Load Firebase config
     const firebaseConfig = result.firebaseConfig || defaultFirebaseConfig;
     apiKeyInput.value = firebaseConfig.apiKey || "";
@@ -36,6 +66,18 @@ document.addEventListener("DOMContentLoaded", () => {
     messagingSenderIdInput.value = firebaseConfig.messagingSenderId || "";
     appIdInput.value = firebaseConfig.appId || "";
     measurementIdInput.value = firebaseConfig.measurementId || "";
+
+    clientIds = result.githubClientIds || [];
+    renderClientList();
+  });
+
+  document.getElementById('addGithubClient').addEventListener('click', () => {
+    const val = newClientInput.value.trim();
+    if (!val) return alert('Please provide a Client ID');
+    if (clientIds.includes(val)) return alert('This Client ID is already added');
+    clientIds.push(val);
+    newClientInput.value = '';
+    renderClientList();
   });
 
   // Save settings
@@ -61,9 +103,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     chrome.storage.sync.set({ 
-      fps, 
-      source, 
-      firebaseConfig 
+      fps,
+      source,
+      firebaseConfig,
+      githubClientIds: clientIds
     }, () => {
       alert("Settings saved! The extension will use the new Firebase configuration on next restart.");
     });
@@ -90,6 +133,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }, () => {
         alert("Settings reset to default!");
       });
+      // Clear client IDs as well
+      clientIds = [];
+      renderClientList();
+      chrome.storage.sync.set({ githubClientIds: clientIds });
     }
   });
 });

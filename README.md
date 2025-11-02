@@ -61,7 +61,18 @@ A Chrome extension that allows students to record their screens and automaticall
 ### For Administrators
 
 1. **Configure Firebase**: Go to extension settings and update Firebase configuration
-2. **Update GitHub OAuth**: Update the GitHub Client ID and Secret in the code if needed
+2. **Configure GitHub OAuth (recommended)**:
+   - Create a GitHub OAuth App at https://github.com/settings/developers (set application type to "Other" or leave callback blank).
+      - Copy the OAuth App's Client ID (DO NOT copy the Client Secret into the extension).
+      - Open the extension Settings and add one or more **Client IDs** under GitHub settings.
+      - If you add multiple Client IDs, users will be prompted to choose which one to use when logging in.
+         - To add client IDs: open Settings (gear icon) → enter a client ID and click Add Client ID.
+         - If multiple client IDs exist, the popup will prompt the user to pick one by index before starting Device Flow; the user may also cancel and use a PAT instead.
+   - The extension uses the OAuth Device Flow so a client secret is not required and should never be embedded in the extension.
+
+3. **PAT fallback (not recommended for production)**:
+   - If you cannot configure an OAuth App, users can sign in with a Personal Access Token (PAT) with the `repo` scope.
+   - PATs are less secure and should be used only for testing. Do NOT check secrets into source control.
 
 ---
 
